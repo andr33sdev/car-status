@@ -1,0 +1,10 @@
+# Ignorar dependencias
+node_modules/
+
+# Ignorar archivos de compilación
+dist/
+build/
+
+# Ignorar configuraciones locales
+.env
+.vscode/
