@@ -1,7 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../database";
 
-
 export class User extends Model {
     public id!: number;
     public username!: string;
