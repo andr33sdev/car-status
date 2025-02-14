@@ -4,6 +4,8 @@ import cors from "cors";
 import bodyParser from 'body-parser';
 import sequelize from "./database"; // Asegúrate de que este archivo exista y tenga la conexión a PostgreSQL
 import userRoutes from "./routes/userRoutes";
+import authRoutes from "./routes/authRoutes";
+import authMiddleware from "./middlewares/authMiddleware";
 
 dotenv.config();
 
@@ -14,15 +16,19 @@ app.use(cors());
 app.use(express.json());
 
 // Middleware para parsear el cuerpo de la solicitud
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Ruta de prueba
-app.get("/", (req, res) => {
-    res.send("Backend funcionando correctamente en Railway 🚀");
+app.get("/", authMiddleware,(req, res) => {
+    res.send("Ruta protegida: acceso autorizado 🚀");
 });
 
 // Usar las rutas de usuarios
 app.use(userRoutes);
+
+// Usar las rutas de auth
+app.use(authRoutes);
 
 // Conectar a la base de datos
 sequelize.authenticate()
