@@ -27,7 +27,7 @@ export default function FormRegister() {
             onSubmit={handleSubmit}
             className="bg-white shadow-lg rounded-xl p-6 w-full max-w-md mx-auto"
         >
-            <h2 className="text-2xl font-semibold text-center mb-4">Registro</h2>
+            <h2 className="text-2xl font-semibold text-center mb-8 text-slate-800">Crear una nueva cuenta</h2>
             <div className="mb-4">
                 <label className="block text-gray-700 font-medium mb-1">Nombre de usuario</label>
                 <input
@@ -35,7 +35,7 @@ export default function FormRegister() {
                     name="username"
                     value={formData.username}
                     onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-700"
                 />
             </div>
             <div className="mb-4">
@@ -45,7 +45,7 @@ export default function FormRegister() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-700"
                 />
             </div>
             <div className="mb-4">
@@ -55,12 +55,12 @@ export default function FormRegister() {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-700"
                 />
             </div>
             <button
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition-all cursor-pointer"
+                className="w-full bg-slate-700 hover:bg-slate-800 text-white font-semibold py-2 rounded-lg transition-all cursor-pointer"
             >
                 Registrarse
             </button>
