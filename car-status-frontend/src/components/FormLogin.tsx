@@ -32,6 +32,7 @@ export default function Login() {
             if (response.ok) {
                 // Si el login es exitoso, guardamos el token y el usuario en el Context
                 localStorage.setItem('token', data.token) // Y en el localStorage también lo guardamos
+                localStorage.setItem('user', JSON.stringify(data.user))
                 // Aquí usamos el dispatch del context para guardar el usuario y el token
                 dispatch({
                     type: 'SET_USER',
