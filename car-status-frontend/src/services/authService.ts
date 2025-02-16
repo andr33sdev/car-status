@@ -13,7 +13,7 @@ export interface RegisterResponse { // Interface de lo que recibimos en caso de 
 // Función para registrar un usuario
 export const registerUser = async (formData: RegisterData): Promise<RegisterResponse | null> => {
     try {
-        const response = await fetch('https://zentra-production.up.railway.app/api/register', {
+        const response = await fetch('https://car-status.up.railway.app/api/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
