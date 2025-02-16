@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import sequelize from "./database"; // Asegúrate de que este archivo exista y tenga la conexión a PostgreSQL
 import userRoutes from "./routes/userRoutes";
 import authRoutes from "./routes/authRoutes";
+import validateTokenRoutes from './routes/validateTokenRoutes'
 import authMiddleware from "./middlewares/authMiddleware";
 
 dotenv.config();
@@ -20,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Ruta de prueba
-app.get("/", authMiddleware,(req, res) => {
+app.get("/", authMiddleware, (req, res) => {
     res.send("Ruta protegida: acceso autorizado 🚀");
 });
 
@@ -29,6 +30,9 @@ app.use(userRoutes);
 
 // Usar las rutas de auth
 app.use(authRoutes);
+
+// Validación a través de JWT para rutas protegidas (componente PrivateRoute.tsx)
+app.use(validateTokenRoutes)
 
 // Conectar a la base de datos
 sequelize.authenticate()

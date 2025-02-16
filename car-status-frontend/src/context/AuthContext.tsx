@@ -1,4 +1,4 @@
-import { createContext, useReducer, ReactNode } from 'react'
+import { useEffect, createContext, useReducer, ReactNode } from 'react'
 
 // Definimos el tipo de nuestros estados
 type AuthState = {
@@ -16,7 +16,7 @@ type AuthActions =
 
 // Estado inicial
 const initialState: AuthState = {
-    token: null,
+    token: localStorage.getItem('token'), // Obtenemos el token desde el localStorage
     user: {
         username: '',
         email: '',
@@ -34,6 +34,7 @@ const authReducer = (state: AuthState, action: AuthActions): AuthState => {
                 token: action.payload.token
             }
         case 'LOGOUT':
+            localStorage.removeItem('token') // Eliminamos el token al hacer logout
             return {
                 ...state,
                 user: {},
@@ -71,6 +72,12 @@ export const AuthContext = createContext<any>(null);
 // Context Provider
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [state, dispatch] = useReducer(authReducer, initialState);
+
+    useEffect(() => {
+        if (state.token) {
+            localStorage.setItem('token', state.token)
+        }
+    }, [state.token])
 
     return (
         <AuthContext.Provider value={{ state, dispatch }}>

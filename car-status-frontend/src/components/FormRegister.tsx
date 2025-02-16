@@ -1,11 +1,13 @@
 import { useState, useContext } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { registerUser } from '../services/authService'
+import { useNavigate } from 'react-router-dom'
 
 export default function FormRegister() {
     const { dispatch } = useContext(AuthContext) // Obtenemos el dispatch del Context
-
     const [formData, setFormData] = useState({ username: '', email: '', password: '', })
+
+    const navigate = useNavigate()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
@@ -17,8 +19,10 @@ export default function FormRegister() {
         // Hacer la solicitud POST al backend para registrar al usuario
         const data = await registerUser(formData)
         if (data) {
+            localStorage.setItem('token', data.token)
             dispatch({ type: 'SET_USER', payload: { user: data.user, token: data.token } })
             setFormData({ username: '', email: '', password: '' }) // Reiniciamos el formulario
+            navigate('/login')
         }
     }
 
