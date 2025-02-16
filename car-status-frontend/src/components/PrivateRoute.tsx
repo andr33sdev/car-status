@@ -18,7 +18,7 @@ const PrivateRoute = ({ children }: PrivateRouteProps) => {
             }
 
             try {
-                const response = await fetch ('http://localhost:5000/api/validate-token', {
+                const response = await fetch ('https://car-status.up.railway.app/api/validate-token', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
