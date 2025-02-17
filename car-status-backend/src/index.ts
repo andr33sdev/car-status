@@ -7,6 +7,7 @@ import userRoutes from "./routes/userRoutes";
 import authRoutes from "./routes/authRoutes";
 import validateTokenRoutes from './routes/validateTokenRoutes'
 import authMiddleware from "./middlewares/authMiddleware";
+import vehicleRoutes from "./routes/vehicleRoutes"
 
 dotenv.config();
 
@@ -30,6 +31,8 @@ app.use(userRoutes);
 
 // Usar las rutas de auth
 app.use(authRoutes);
+
+app.use(vehicleRoutes);
 
 // Validación a través de JWT para rutas protegidas (componente PrivateRoute.tsx)
 app.use(validateTokenRoutes)
