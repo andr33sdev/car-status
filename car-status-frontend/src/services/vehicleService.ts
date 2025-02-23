@@ -1,7 +1,7 @@
 import { Vehicle } from "../types"
 
 export type VehicleResponse = {
-    id: number,
+    id?: number,
     brand: string,
     model: string,
     year: number,

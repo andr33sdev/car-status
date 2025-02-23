@@ -1,6 +1,6 @@
 
 type CarCardProps = {
-  id: number,
+  id?: number,
   brand: string
   model: string,
   year: number,
