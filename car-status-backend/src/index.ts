@@ -32,6 +32,7 @@ app.use(userRoutes);
 // Usar las rutas de auth
 app.use(authRoutes);
 
+// usar las rutas de vehicles
 app.use(vehicleRoutes);
 
 // Validación a través de JWT para rutas protegidas (componente PrivateRoute.tsx)

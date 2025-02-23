@@ -14,7 +14,7 @@ export default function Login() {
   }, [navigate])
 
   return (
-    <div className='flex flex-col justify-center items-center h-screen w-screen'>
+    <div className='flex flex-col justify-center items-center'>
       <img src="/my-car-status-logo.png" alt="my car status logo" className='mb-14 w-72' />
       <FormLogin />
     </div>

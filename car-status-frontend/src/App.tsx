@@ -3,16 +3,23 @@ import Login from "./pages/Login"
 import { Routes, Route } from "react-router-dom"
 import Home from "./pages/Home"
 import PrivateRoute from "./components/PrivateRoute"
+import Dashboard from "./components/Dashboard"
+import Vehicles from "./pages/Vehicles"
+import VehicleDetails from "./pages/VehicleDetails"
 
 function App() {
 
   return (
     <div className="bg-gray-50">
-      <Routes>
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
-      </Routes>
+      <Dashboard>
+        <Routes>
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
+          <Route path="/vehicles" element={<PrivateRoute><Vehicles /></PrivateRoute>} />
+          <Route path="/vehicles/:id" element={<PrivateRoute><VehicleDetails /></PrivateRoute>} />
+        </Routes>
+      </Dashboard>
     </div>
   )
 }

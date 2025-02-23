@@ -1,11 +1,11 @@
 
-export interface RegisterData { // Interface de lo que vamos a enviar a través del form
+export type RegisterData = { // Type de lo que vamos a enviar a través del form
     username: string
     email: string
     password: string
 }
 
-export interface RegisterResponse { // Interface de lo que recibimos en caso de solicitud exitosa
+export type RegisterResponse = { // Type de lo que recibimos en caso de solicitud exitosa
     token: string
     user: object
 }
