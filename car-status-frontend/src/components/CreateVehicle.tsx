@@ -17,7 +17,7 @@ export default function CreateVehicle() {
         console.log(formData)
         const data = await registerVehicle(formData)
         if (data) {
-            dispatch({ type: 'CREATE_VEHICLE', payload: { vehicle: data.vehicle } })
+            dispatch({ type: 'CREATE_VEHICLE', payload: { vehicle: data } })
             setFormData({ brand: '', model: '', year: 0, license_plate: '' }) // Reiniciamos el formulario
         }
     }
