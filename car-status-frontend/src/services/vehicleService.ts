@@ -9,7 +9,7 @@ export type VehicleResponse = {
 }
 
 // Función para registrar un usuario
-export const registerVehicle = async (formData: Vehicle): Promise<VehicleResponse | null> => {
+export const registerVehicle = async (formData: Vehicle): Promise<Vehicle | null> => {
     const token = localStorage.getItem('token')
 
     try {
@@ -37,7 +37,7 @@ export const registerVehicle = async (formData: Vehicle): Promise<VehicleRespons
     }
 }
 
-export const getVehicles = async (): Promise<VehicleResponse[] | null> => {
+export const getVehicles = async (): Promise<Vehicle[] | null> => {
     const token = localStorage.getItem('token')
     try {
         const response = await fetch('https://car-status.up.railway.app/api/get-user-vehicles', {
