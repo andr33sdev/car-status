@@ -43,3 +43,25 @@ export const getUserVehicles = async (req: Request, res: Response) => {
         return
     }
 };
+
+export const getUserVehicleById = async (req: Request, res: Response) => {
+    try {
+        const user_id = (req as any).user.id // ID del usuario autenticado
+        const { id } = req.params // ID del vehículo a buscar
+
+        // Buscar el vehículo asegurando que pertenezca al usuario autenticado
+        const vehicle = await Vehicle.findOne({
+            where: { id, user_id }
+        })
+
+        if (!vehicle) {
+            res.status(404).json({ message: 'Vehículono encontrado o no autorizado' })
+        }
+
+        res.status(200).json(vehicle)
+
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ message: 'Error al obtener el vehículo' })
+    }
+}

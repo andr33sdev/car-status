@@ -21,24 +21,25 @@ export default function Vehicles() {
 
     return (
         <div className="p-5 space-y-10">
-            <h1 className="mt-5">Estos son tus vehículos registrados</h1>
             {vehicles.length === 0 ? (
-                <p>Cargando vehículos...</p>
+                <p>Aún no has cargado vehículos</p>
             ) : (
-                <div className="grid grid-cols-4 gap-8">
-                    {vehicles.map((vehicle) => (
-                        <Link to={`/vehicles/${vehicle.id}`}>
-                            <CarCard
-                                key={vehicle.id}
-                                id={vehicle.id}
-                                brand={vehicle.brand}
-                                model={vehicle.model}
-                                year={vehicle.year}
-                                license_plate={vehicle.license_plate}
-                            />
-                        </Link>
-                    ))}
-                </div>
+                <>
+                    <h1 className="mt-5">Estos son tus vehículos registrados</h1>
+                    <div className="grid grid-cols-4 gap-8">
+                        {vehicles.map((vehicle) => (
+                            <Link to={`/vehicles/${vehicle.id}`} key={vehicle.id}>
+                                <CarCard
+                                    id={vehicle.id}
+                                    brand={vehicle.brand}
+                                    model={vehicle.model}
+                                    year={vehicle.year}
+                                    license_plate={vehicle.license_plate}
+                                />
+                            </Link>
+                        ))}
+                    </div>
+                </>
             )}
         </div>
     )
