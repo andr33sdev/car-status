@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+@theme {
+    --color-glaucous-500: oklch(54.95% 0.0615 265.31);
+    --color-french-gray-500: oklch(80.63% 0.0259 273.43);
+    --color-anti-flash-white-500: oklch(93.44% 0.0055 274.96);
+    --color-rose-pompadour-500: oklch(74.41% 0.163 6.13);
+    --color-xanthous-500: oklch(85.98% 0.1405 81.71);
+    --color-dark-blue-night: oklch(15.77% 0.0432 269.21);
+    --color-white-elegant: oklch(98.49% 0.0029 264.54);
+}
