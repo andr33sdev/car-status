@@ -1,8 +1,11 @@
 import { useState, useContext } from "react";
 import { VehicleContext } from "../context/VehiclesContext";
 import { registerVehicle } from "../services/vehicleService";
-import carData from '../db/carData.ts'
+import carData from "../db/carData.ts";
 import { Vehicle } from "../types/index.ts";
+
+console.log("carData:", carData);
+
 
 export default function CreateVehicle() {
     const { dispatch } = useContext(VehicleContext);
@@ -10,31 +13,42 @@ export default function CreateVehicle() {
         brand: "",
         model: "",
         year: 0,
-        license_plate: ""
-    });
+        license_plate: "",
+        image: "" // Nueva propiedad para la imagen
+    })
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
         const { name, value } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: name === "year" ? Number(value) || "" : value
-        }));
+        setFormData((prev) => {
+            let updatedData = {
+                ...prev,
+                [name]: name === "year" ? Number(value) || "" : value,
+            }
+
+            return updatedData;
+        })
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const data = await registerVehicle(formData);
+        e.preventDefault()
+        const data = await registerVehicle(formData)
         if (data) {
-            dispatch({ type: "CREATE_VEHICLE", payload: { vehicle: data } });
-            setFormData({ brand: "", model: "", year: 0, license_plate: "" });
+            dispatch({ type: "CREATE_VEHICLE", payload: { vehicle: data } })
+            setFormData({ brand: "", model: "", year: 0, license_plate: "", image: "" })
         }
-    };
+    }
 
     return (
         <div className="w-screen flex flex-row">
             <div className="bg-white-elegant w-1/2 flex items-center justify-center h-full">
-                <img src="/car-garage.png" alt="" className="w-xl" />
+                {/* 📌 Mostramos la imagen del auto seleccionado */}
+                {formData.image ? (
+                    <img src={formData.image} alt={formData.model} className="w-xl" />
+                ) : (
+                    <img src="/car-garage.png" alt="Default" className="w-xl" />
+                )}
             </div>
+
             <div className="bg-white shadow-lg w-1/2">
                 <h2 className="text-2xl w-1/2 mx-auto font-bold border-b-2 border-dark-blue-night pb-4 uppercase text-center mt-30 mb-15 text-dark-blue-night">
                     ¡Agrega los datos de tu auto para un mejor seguimiento!
@@ -68,6 +82,7 @@ export default function CreateVehicle() {
                                 <option key={model} value={model}>{model}</option>
                             ))}
                         </select>
+
                     </div>
                     <div className="mb-4">
                         <label className="block uppercase text-dark-blue-night font-bold mb-2">Año</label>

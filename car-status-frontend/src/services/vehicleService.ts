@@ -8,10 +8,10 @@ export type VehicleResponse = {
     license_plate: string
 }
 
+const token = localStorage.getItem('token')
+
 // Función para registrar un usuario
 export const registerVehicle = async (formData: Vehicle): Promise<Vehicle | null> => {
-    const token = localStorage.getItem('token')
-
     try {
         const response = await fetch('https://car-status.up.railway.app/api/create-user-vehicle', {
             method: 'POST',
@@ -38,7 +38,6 @@ export const registerVehicle = async (formData: Vehicle): Promise<Vehicle | null
 }
 
 export const getVehicles = async (): Promise<Vehicle[] | null> => {
-    const token = localStorage.getItem('token')
     try {
         const response = await fetch('https://car-status.up.railway.app/api/get-user-vehicles', {
             method: 'GET',
@@ -60,3 +59,23 @@ export const getVehicles = async (): Promise<Vehicle[] | null> => {
         return null
     }
 }
+
+export const fetchVehicle = async (id: string) => {
+    try {
+        const response = await fetch(`https://car-status.up.railway.app/api/get-user-vehicle/${id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        if (!response.ok) throw new Error("Vehículo no encontrado");
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error al obtener el vehículo:", error);
+        return null; // Retorna null para manejar el error en el componente
+    }
+};

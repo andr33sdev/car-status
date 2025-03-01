@@ -1,19 +1,7 @@
-// src/models/Vehicle.ts
-import { DataTypes, Model, Optional } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 import sequelize from '../database';
 
-interface VehicleAttributes {
-    id: number;
-    user_id: number;
-    brand: string;
-    model: string;
-    year: number;
-    license_plate: string;
-}
-
-interface VehicleCreationAttributes extends Optional<VehicleAttributes, 'id'> { }
-
-class Vehicle extends Model<VehicleAttributes, VehicleCreationAttributes> implements VehicleAttributes {
+class Vehicle extends Model {
     public id!: number;
     public user_id!: number;
     public brand!: string;

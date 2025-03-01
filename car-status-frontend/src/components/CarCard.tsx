@@ -7,24 +7,18 @@ type CarCardProps = {
   license_plate: string
 }
 
-export default function CarCard({ id, brand, model, year, license_plate }: CarCardProps) {
+export default function CarCard({ brand, model, year, license_plate }: CarCardProps) {
 
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg bg-xanthous-500">
-      <img className="w-full" src="/car.jpg" alt="Sunset in the mountains" />
-      <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2">{license_plate}</div>
-        <p className="text-gray-700 text-base">ID: {id}</p>
+    <div className="bg-blue-pastel rounded-4xl shadow-md h-auto">
+      <div className="flex flex-col px-8 py-6">
+        <span className="font-bold text-xl text-dark-blue-night uppercase">{brand}</span>
+        <span className="uppercase text-slate-500">{model} - {year}</span>
+        <img className="h-[120px] m-6 object-center" src="./car-silhouette.png" alt={`${brand} ${model}`} />
       </div>
-      <div className="flex flex-row justify-between items-end p-5">
-        <div className="flex flex-col">
-          <span className="uppercase">{brand}</span>
-          <span className="font-bold uppercase">{model}</span>
-        </div>
-        <div>
-          <span>{year}</span>
-        </div>
+      <div className="bg-blue-pastel-600 font-bold text-right text-dark-blue-night px-8 py-4 rounded-b-4xl">
+        {license_plate}
       </div>
     </div>
-  )
+  );
 }
