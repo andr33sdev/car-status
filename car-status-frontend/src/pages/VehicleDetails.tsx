@@ -53,7 +53,7 @@ export default function VehicleDetails() {
 
         const fetchVehicleDocumentation = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/api/vehicle-documents/${vehicle.id}`, {
+                const response = await fetch(`https://car-status.up.railway.app/api/vehicle-documents/${vehicle.id}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

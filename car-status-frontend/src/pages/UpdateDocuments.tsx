@@ -19,7 +19,7 @@ export default function UpdateDocuments() {
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/vehicle-documents/${id}`, {
+        const response = await fetch(`https://car-status.up.railway.app/api/vehicle-documents/${id}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ export default function UpdateDocuments() {
     console.log("Datos enviados:", documents);
 
     try {
-      const response = await fetch("http://localhost:5000/api/vehicle-documents", {
+      const response = await fetch("https://car-status.up.railway.app/api/vehicle-documents", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
