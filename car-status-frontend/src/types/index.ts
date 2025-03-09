@@ -3,6 +3,5 @@ export type Vehicle = {
     brand: string,
     model: string,
     year: number,
-    license_plate: string,
-    image: string
+    license_plate: string
 }

@@ -7,6 +7,7 @@ import Dashboard from "./components/Dashboard"
 import Vehicles from "./pages/Vehicles"
 import VehicleDetails from "./pages/VehicleDetails"
 import CreateVehicle from "./pages/CreateVehicle"
+import UpdateDocuments from "./pages/UpdateDocuments"
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/create-vehicle" element={<PrivateRoute><CreateVehicle /></PrivateRoute>} />
           <Route path="/vehicles" element={<PrivateRoute><Vehicles /></PrivateRoute>} />
           <Route path="/vehicles/:id" element={<PrivateRoute><VehicleDetails /></PrivateRoute>} />
+          <Route path="/update-documents/:id" element={<PrivateRoute><UpdateDocuments /></PrivateRoute>} />
         </Routes>
       </Dashboard>
     </div>

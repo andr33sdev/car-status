@@ -1,14 +1,17 @@
 import { createContext, useReducer, ReactNode } from "react";
 import { Vehicle } from "../types";
+import { VehicleDocuments } from "../pages/VehicleDetails";
 
 // Definimos el type de nuestros estados
 type VehiclesState = {
-    vehicle: Vehicle
+    vehicle: Vehicle,
+    documents: VehicleDocuments
 }
 
 // Tipos de acciones posibles con su payload
 type VehicleActions =
     | { type: 'CREATE_VEHICLE', payload: { vehicle: Vehicle } }
+    | { type: 'CREATE_DOCUMENTS', payload: { documents: VehicleDocuments } }
 
 // Estado inicial
 const initialState: VehiclesState = {
@@ -18,6 +21,12 @@ const initialState: VehiclesState = {
         model: '',
         year: 0,
         license_plate: ''
+    },
+    documents: {
+        fire_extinguisher_expiry: '',
+        vtv_expiry: '',
+        insurance_expiry: '',
+        license_plate_expiry: ''
     }
 }
 
@@ -28,6 +37,12 @@ const vehicleReducer = (state: VehiclesState, action: VehicleActions) => {
             return {
                 ...state,
                 vehicle: action.payload.vehicle,
+            }
+
+        case 'CREATE_DOCUMENTS':
+            return {
+                ...state,
+                documents: action.payload.documents,
             }
 
         default:

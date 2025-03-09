@@ -1,22 +1,37 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { fetchVehicle } from "../services/vehicleService";
+import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
+import { fetchVehicle } from "../services/vehicleService"
+import VehicleActions from "../components/VehicleActions";
+import VehicleMaintenance from "../components/VehicleMaintenance";
+import VehicleDocuments from "../components/VehicleDocuments";
+import VehicleConsumptions from "../components/VehicleConsumptions";
 
 type Vehicle = {
-    id: number;
-    name: string;
-    brand: string;
-    model: string;
-    year: number;
+    id: number
+    name: string
+    brand: string
+    model: string
+    year: number
 };
 
+export type VehicleDocuments = {
+    fire_extinguisher_expiry: string;
+    vtv_expiry: string;
+    insurance_expiry: string;
+    license_plate_expiry: string;
+};
+
+const token = localStorage.getItem('token')
+
 export default function VehicleDetails() {
-    const { id } = useParams();
-    const [vehicle, setVehicle] = useState<Vehicle | null>(null);
-    const [loading, setLoading] = useState(true);
+    const { id } = useParams()
+    const [vehicle, setVehicle] = useState<Vehicle | null>(null)
+    const [documents, setDocuments] = useState<VehicleDocuments | null>(null);
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        if (!id) return; // Si `id` es undefined, no hacer la petición
+        if (!id) return; // Si id es undefined, no hacer la petición
+
         const getVehicle = async () => {
             setLoading(true);
             try {
@@ -33,42 +48,44 @@ export default function VehicleDetails() {
         getVehicle();
     }, [id]);
 
-    if (loading) return <p>Cargando...</p>;
-    if (!vehicle) return <p>Vehículo no encontrado.</p>;
+    useEffect(() => {
+        if (!vehicle) return; // Esperar a que vehicle esté definido
+
+        const fetchVehicleDocumentation = async () => {
+            try {
+                const response = await fetch(`http://localhost:5000/api/vehicle-documents/${vehicle.id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    console.error('Error al intentar obtener documentación:', data.msg);
+                    return;
+                }
+                console.log(data)
+                setDocuments(data);
+            } catch (error) {
+                console.error('Error en la solicitud:', error);
+            }
+        };
+
+        fetchVehicleDocumentation();
+    }, [vehicle]); // Solo se ejecuta cuando vehicle cambia
+
+    if (loading) return <p>Cargando...</p>
+    if (!vehicle) return <p>Vehículo no encontrado.</p>
 
     return (
         <div className="grid grid-cols-2 grid-rows-2 gap-10 p-10 w-screen">
-            <div className="bg-white rounded-xl">
-                <h2 className="uppercase font-bold text-dark-blue-night p-5">Consumos</h2>
-            </div>
-            <div className="bg-white rounded-xl">
-                <h2 className="uppercase font-bold text-dark-blue-night p-5">Documentación</h2>
-                <div className="grid grid-cols-2 grid-rows-2 gap-5 p-5 w-full">
-                    <div className="w-full"><span className="font-semibold">Vencimiento Matafuegos</span><p>4/8/25</p></div>
-                    <div className="w-full"><span className="font-semibold">Vencimiento VTV</span><p>2/4/25</p></div>
-                    <div className="w-full"><span className="font-semibold">Vencimiento Seguro</span><p>12/3/25</p></div>
-                    <div className="w-full"><span className="font-semibold">Vencimiento Patente</span><p>24/2/25</p></div>
-                </div>
-            </div>
-            <div className="bg-white rounded-xl">
-                <h2 className="uppercase font-bold text-dark-blue-night p-5">Mantenimientos</h2>
-                <div className="grid grid-cols-2 grid-rows-2 gap-5 p-5 w-full">
-                    <div className="w-full"><span className="font-semibold">Última revisión presión neumáticos</span><p>Fecha: 4/8/25 | Presión: 30</p></div>
-                    <div className="w-full"><span className="font-semibold">Última revisión nivel de aceite</span><p>Fecha: 2/4/25 | Cantidad: </p></div>
-                    <div className="w-full"><span className="font-semibold">Última cambio de aceite realizado</span><p>Fecha: 12/3/25 | Aceite: </p></div>
-                    <div className="w-full"><span className="font-semibold">Última revisión líquido hidráulico</span><p>Fecha: 24/2/25 | Cantidad: </p></div>
-                    <div className="w-full"><span className="font-semibold">Última revisión líquido de frenos</span><p>Fecha: 24/2/25 | Cantidad: </p></div>
-                </div>
-            </div>
-            <div className="bg-white rounded-xl">
-                <h2 className="uppercase font-bold text-dark-blue-night p-5">Panel de acciones</h2>
-                <div className="flex flex-col space-y-3 px-5 py-3">
-                    <div className="bg-dark-blue-night text-white text-sm hover:bg-slate-700 hover:cursor-pointer transition-colors uppercase font-bold w-fit p-3 rounded-lg">Registrar consumos</div>
-                    <div className="bg-dark-blue-night text-white text-sm hover:bg-slate-700 hover:cursor-pointer transition-colors uppercase font-bold w-fit p-3 rounded-lg">Actualizar documentación</div>
-                    <div className="bg-dark-blue-night text-white text-sm hover:bg-slate-700 hover:cursor-pointer transition-colors uppercase font-bold w-fit p-3 rounded-lg">Anotar mantenimientos</div>
-                    <div className="bg-dark-blue-night text-white text-sm hover:bg-slate-700 hover:cursor-pointer transition-colors uppercase font-bold w-fit p-3 rounded-lg">Editar datos del vehículo</div>
-                </div>
-            </div>
+            <VehicleConsumptions />
+            <VehicleDocuments documents={documents} />
+            <VehicleMaintenance />
+            <VehicleActions vehicleId={vehicle.id} />
         </div>
-    );
+    )
 }

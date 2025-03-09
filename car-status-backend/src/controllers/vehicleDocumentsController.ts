@@ -4,17 +4,23 @@ import Vehicle from '../models/Vehicle';
 
 export const getVehicleDocumentsById = async (req: Request, res: Response) => {
     try {
-        const { vehicleId } = req.params
-        const documents = await VehicleDocuments.findOne({ where: { vehicle_id: vehicleId } })
+        const { vehicleId } = req.params;
+        // Ordenar por `id` o `createdAt` para obtener el último documento
+        const documents = await VehicleDocuments.findOne({
+            where: { vehicle_id: vehicleId },
+            order: [['id', 'DESC']] // Esto asegurará que obtienes el documento más reciente
+        });
+
         if (!documents) {
-            res.status(404).json({ message: 'Documentos no encontrados' })
+             res.status(404).json({ message: 'Documentos no encontrados' });
         }
-        res.json(documents)
+
+        res.json(documents);
     } catch (error) {
-        console.error(error)
-        res.status(500).json({ message: 'Error al obtener los documentos' })
+        console.error(error);
+        res.status(500).json({ message: 'Error al obtener los documentos' });
     }
-}
+};
 
 export const createAndUpdateVehicleDocuments = async (req: Request, res: Response) => {
     try {
