@@ -20,7 +20,8 @@ const initialState: VehiclesState = {
         brand: '',
         model: '',
         year: 0,
-        license_plate: ''
+        license_plate: '',
+        image: ""
     },
     documents: {
         fire_extinguisher_expiry: '',
